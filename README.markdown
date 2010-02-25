@@ -1,6 +1,7 @@
 # Django & Compass gebruiken als een User Interaction Design tool
 
-By: berry.groenendijk@gmail.com
+By: Berry Groenendijk
+
 Date: 25 february 2010
 
 ## Language
@@ -13,7 +14,7 @@ Ik gebruik al een tijdlang Django en heb sinds kort Compass ontdekt. Compass is 
 
 In plaats van papieren ontwerpen, zg. wireframes, Photoshop plaatjes of Firework plaatjes, kun je een compleet functionele en dus klikbare website maken met behulp van Django. En met behulp van Compass kun de site heel snel vormgeven.
 
-Ik denk dat je zo'n website in evenveel tijd kan bouwen als een tradiotionele wireframe. Ook beweer ik dat zo'n website net zo aanpasbaar is.
+Ik denk dat je zo'n website in evenveel tijd kan bouwen als een traditionele wireframe. Ook beweer ik dat zo'n website net zo aanpasbaar is.
 
 ## Benodigdheden
 
