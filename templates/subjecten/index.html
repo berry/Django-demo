@@ -1,0 +1,10 @@
+{% block content %}
+	<table>
+		{% for subject in subjecten %}
+		<tr>
+			<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a></td>
+			<td>{{ subject.woonadres_woonplaats|upper }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock content %}

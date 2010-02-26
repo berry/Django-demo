@@ -1,4 +1,4 @@
-# Django & Compass gebruiken als een User Interaction Design tool
+ï»¿# Django & Compass gebruiken als een User Interaction Design tool
 
 By: Berry Groenendijk
 
@@ -20,7 +20,7 @@ Met deze demo hoop ik aan te geven dat het maken van een functioneel werkende sc
 
 Ik zie Django + Compass ook vooral als een manier om iteratief te ontwikkelen. Op het internet wordt regelmatig aan de hand van een plaatje van de Mona Lisa toegelicht wat het [verschil is tussen incrementeel en iteratief ontwikkelen](http://www.agileproductdesign.com/blog/dont_know_what_i_want.html).
 
-In deze demo gaan we op basis van een probleemstelling idee‘n en concepten uitwerken tot een eerste schets van een website. Maar, wel een werkende functionele, klikbare en zelfs testbare schets.
+In deze demo gaan we op basis van een probleemstelling ideeÃ«n en concepten uitwerken tot een eerste schets van een website. Maar, wel een werkende functionele, klikbare en zelfs testbare schets.
 
 Vanaf dat punt kun je telkens onderdelen van deze schets verder uitwerken en verbeteren. Op die manier wordt de website iteratief steeds beter.
 
@@ -42,9 +42,9 @@ Bij met name Nederlandse gemeenten wordt [zaakgericht werken](http://www.zaakger
 
 We gaan een website bouwen die gebruikt wordt door ambtenaren om zaken mee af te handelen. Het domein kent globaal de volgende objecten:
 
-* subject, een cli‘nt die iets aanvragen bij de gemeente
+* subject, een cliÃ«nt die iets aanvragen bij de gemeente
 * zaak, een hoeveelheid werk die middels stappen en statussen af te handelen is en te volgen is.
-* verstrekking, het product dat geleverd wordt aan de cli‘nt (bijv. een vergunning of een vergoeding)
+* verstrekking, het product dat geleverd wordt aan de cliÃ«nt (bijv. een vergunning of een vergoeding)
 
 Voor onze eerste schets is dit voldoende informatie.
 
@@ -79,7 +79,7 @@ Laten we eens kijken wat we gemaakt hebben. Vanuit de djangodemo directory tik:
 
 Browse naar http://127.0.0.1:8000/ en als het goed is zie je een Django welkom pagina met "It worked!". Deze server is absoluut niet bedoeld voor productie doeleinden, maar voor te ontwikkelen is ie prima.
 
-Eerst nog wat initi‘le settings aanpassen. Het configuratie bestand van Django is geen XML bestand of iets dergelijks maar gewoon een Python bestand. Heel gemakkelijk. Open het bestand settings.py. Wijzig de volgende variabelen naar:
+Eerst nog wat initiÃ«le settings aanpassen. Het configuratie bestand van Django is geen XML bestand of iets dergelijks maar gewoon een Python bestand. Heel gemakkelijk. Open het bestand settings.py. Wijzig de volgende variabelen naar:
 
 	DATABASE_ENGINE = 'django.db.backends.sqlite3'
 	DATABASE_NAME = '/Users/berry/djangodemo/djangodemo_db' #pas dit aan naar een plek op je eigen harde schijf
@@ -113,7 +113,7 @@ We hebben nu een database aangemaakt en een aantal standaard tabellen zijn aange
 
 ## Subjecten
 
-We gaan onze eerste Django app maken en wel voor subjecten, de cli‘nten van een gemeente. Vanuit de djangodemo directory tik:
+We gaan onze eerste Django app maken en wel voor subjecten, de cliÃ«nten van een gemeente. Vanuit de djangodemo directory tik:
 
 	berry$ python manage.py startapp subjecten
 	berry$ ls
@@ -272,5 +272,137 @@ Er vallen een aantal dingen op. Alle velden zijn verplicht. Dit is aan te passen
 De `__unicode__` functie wordt aangeroepen als de print functie van de class wordt aangeroepen. In de admin verschijnen nu de namen van de subjecten. Mooi zo.
 
 Even terugkijken. We hebben een datamodel aangemaakt, de admin interface geactiveerd en wat data ingevoerd. Netjes. Laten we nu een heuse echt pagina gaan maken voor de website.
+
+## Onze eerste webpagina
+
+Webpagina's in Django worden gegenereerd door views. Een view is een type webpagina. In een view wordt data bij elkaar verzameld om op de webpagina te tonen. In een view wordt ook een template gedefinieerd. Data en template leiden tot een HTML pagina. Maar, je kan net zo goed ook XML, JSON, ASCII, etc. gegenereerd.
+
+Views worden gekoppeld aan een url via de urls.py. In urls.py ontwerp je de urls van de website. In Django ben je geheel vrij in het ontwerpen van de urls van je applicatie.
+
+Laten we eerst het url schema ontwerpen voor onze subjecten. Open subjecten/urls.py:
+
+	berry$ touch subjecten/urls.py
+	berry$ edit subjecten/urls.py
+
+En laat het als volgt uit zien:
+
+	from django.conf.urls.defaults import *
+
+	urlpatterns = patterns('djangodemo.subjecten.views',
+		(r'^$', 'index'),
+		(r'^(?P<subject_id>\d+)/$', 'detail'),
+	)
+
+In de hoofddirectory van de djangodemo staat de hoofd urls.py. Daar zullen we nog een verwijzing moeten maken naar de urls.py van subjecten. Open urls.py en laat het als volgt uit zien:
+
+	from django.conf.urls.defaults import *
+	
+	# Uncomment the next two lines to enable the admin:
+	from django.contrib import admin
+	admin.autodiscover()
+	
+	urlpatterns = patterns('',
+		# Example:
+		# (r'^djangodemo/', include('djangodemo.foo.urls')),
+	
+		# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+		# to INSTALLED_APPS to enable admin documentation:
+		# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	
+		# Uncomment the next line to enable the admin:
+		(r'^admin/', include(admin.site.urls)),
+		
+		# Subjecten
+		(r'^subjecten/', include("djangodemo.subjecten.urls")),
+	)
+
+Het leidt er toe dat de url `/subjecten` de methode index in djangodemo.subjecten.view aanroept. En dat bijvoorbeeld de url `/subjecten/10` de methode detail aanroept in de djangodemo.subjecten.views met de parameter 'subject_id' die in dit geval de waarde '10' heeft. 
+
+Open het bestand subjecten/views.py en laat het er als volgt uit zien:
+
+	from django.shortcuts import render_to_response
+	
+	from djangodemo.subjecten.models import Subject
+	
+	def index(request):
+		'''Lijst van alle subjecten'''
+	
+		subjecten = Subject.objects.all()
+		return render_to_response('subjecten/index.html', {'subjecten': subjecten})
+		
+	def detail(request, subject_id):
+		'''Details van een subject'''
+	
+		subject = Subject.objects.get(pk = subject_id)
+		return render_to_response('subjecten/detail.html', {'subject': subject})
+
+`render_to_response` is een hulpfunctie om snel een template plus een data dictionary samen te voegen en terug te geven aan de HTTP response.
+
+Als je nu naar http://127.0.0.1:8000/subjecten gaat dan zie je een foutmelding dat Django het template bestand niet kan vinden. De locatie van de templates staat in settings.py in de variabele `TEMPLATE_DIRS`. Open settings.py en wijzig `TEMPLATE_DIRS`in:
+
+	TEMPLATE_DIRS = (
+		# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+		# Always use forward slashes, even on Windows.
+		# Don't forget to use absolute paths, not relative paths.
+		"/Users/berry/git/djangodemo/templates",
+	)
+
+Maak het bestand templates/subjecten/index.html:
+
+	mkdir templates
+	mkdir templates/subjecten
+	touch templates/subjecten/index.html
+
+Laat templates/subjecten/index.html er als volgt uit zien:
+
+	{% block content %}
+		<table>
+			{% for subject in subjecten %}
+			<tr>
+				<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a></td>
+				<td>{{ subject.woonadres_woonplaats|upper }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% endblock content %}
+	
+Browse naar http://127.0.0.1:8000/subjecten en voila onze eerste webpagina!
+
+En hier komt de grote kracht van Django naar voren. Als webdesigner ben je volledig vrij in het maken van de HTML. De template taal van Django is heel eenvoudig en door webdesigners te begrijpen. Een template kan dus gemaakt worden door een webdesigner. Daar hoeft geen programmeur aan te pas te komen. In de template taal wordt geen Python gebruikt. Je kunt als programmeur dan ook niet verleidt worden om te programmeren in de template. Code en HTML template zijn strict van elkaar gescheiden.
+
+De `{% %}` tags zijn stuur commando's zoals simpele for-loops of if-then constructies. De `{{ }}` tags zijn placeholders voor data. De template wordt gevoed met een data dictionary (zie ook de methode index eerder in het views.py bestand). In de data tags kun je 1 of meerdere filters gebruiken om de data op te maken. Bij woonplaats heb ik het filter upper gebruikt die de woonplaats in bovenkast plaatst.
+
+Maak het bestand templates/subjecten/detail.html:
+
+	touch templates/subjecten/detail.html
+
+Open dit bestand en laat het als volgt uit zien:
+
+{% block content %}
+	<table>
+		<tr>
+			<td>Naam</td>
+			<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</td>
+		</tr>
+		<tr>
+			<td>Woonadres</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Straat</td>
+			<td>{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}
+			</td>
+		</tr>
+		<tr>
+			<td>Postcode en woonplaats</td>
+			<td>{{ subject.woonadres_postcode|upper }} {{ subject.woonadres_woonplaats|upper }}
+			</td>
+		</tr>
+	</table>
+{% endblock content %}
+
+Dit is wel een hele eenvoudige weergave van een client. Maar goed, we zijn nog steeds aan het schetsen. We kunnen nu in de lijst van clienten klikken op een client en krijgen dan de details van de client te zien. De eerste contouren van een functionele en klikbare website ontstaan.
+
+We gaan nu nog een stukje van de kracht van Django templates zien: inheritance van templates.
 
 ** waiting for more **

@@ -1,0 +1,22 @@
+{% block content %}
+	<table>
+		<tr>
+			<td>Naam</td>
+			<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</td>
+		</tr>
+		<tr>
+			<td>Woonadres</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Straat</td>
+			<td>{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}
+			</td>
+		</tr>
+		<tr>
+			<td>Postcode en woonplaats</td>
+			<td>{{ subject.woonadres_postcode|upper }} {{ subject.woonadres_woonplaats|upper }}
+			</td>
+		</tr>
+	</table>
+{% endblock content %}
