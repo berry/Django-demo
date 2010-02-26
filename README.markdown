@@ -180,23 +180,23 @@ Synchroniseer opnieuw de modellen met de database:
 
 En als laatste dienen we de admin app aan de urls.py toe te voegen. Urls.py bevat het url schema van je applicatie. Het url schema is feite een koppeling tussen een url en de code die de html gaat genereren. Daarover later meer. Haal het commentaar teken, #, weg bij de aangegeven regels in het urls.py bestand zodat het er als volgt uit ziet:
 
-from django.conf.urls.defaults import *
-
-# Uncomment the next two lines to enable the admin:
-from django.contrib import admin
-admin.autodiscover()
-
-	urlpatterns = patterns('',
-		# Example:
-		# (r'^djangodemo/', include('djangodemo.foo.urls')),
+	from django.conf.urls.defaults import *
 	
-		# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-		# to INSTALLED_APPS to enable admin documentation:
-		#(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	# Uncomment the next two lines to enable the admin:
+	from django.contrib import admin
+	admin.autodiscover()
 	
-		# Uncomment the next line to enable the admin:
-		(r'^admin/', include(admin.site.urls)),
-	)
+		urlpatterns = patterns('',
+			# Example:
+			# (r'^djangodemo/', include('djangodemo.foo.urls')),
+		
+			# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+			# to INSTALLED_APPS to enable admin documentation:
+			#(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+		
+			# Uncomment the next line to enable the admin:
+			(r'^admin/', include(admin.site.urls)),
+		)
 
 Browse naar http://127.0.0.1:8000/admin. Je krijgt nu een login venster te zien voor het admin scherm. Je ziet een aantal tabellen, maar nog niet de tabellen van subjecten. Dat gaan we veranderen. Maak een bestand admin.py in de subjecten directory
 
@@ -269,7 +269,7 @@ Er vallen een aantal dingen op. Alle velden zijn verplicht. Dit is aan te passen
 		def __unicode__(self):
 			return "%s %s %s" % (self.voorletters, self.tussenvoegsels, self.achternaam)
 
-De __unicode__ functie wordt aangeroepen als de print functie van de class wordt aangeroepen. In de admin verschijnen nu de namen van de subjecten. Mooi zo.
+De `__unicode__` functie wordt aangeroepen als de print functie van de class wordt aangeroepen. In de admin verschijnen nu de namen van de subjecten. Mooi zo.
 
 Even terugkijken. We hebben een datamodel aangemaakt, de admin interface geactiveerd en wat data ingevoerd. Netjes. Laten we nu een heuse echt pagina gaan maken voor de website.
 
