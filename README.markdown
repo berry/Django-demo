@@ -1,8 +1,7 @@
 ﻿# Django & Compass gebruiken als een User Interaction Design tool
 
-By: Berry Groenendijk
-
-Date: 25 february 2010
+* By: Berry Groenendijk
+* Date: 25 february 2010
 
 ## Language
 
@@ -10,9 +9,15 @@ This demo is targeted at a Dutch audience. So I will switch to Dutch. Now.
 
 ## Doel
 
-Ik gebruik al een tijdlang Django en heb sinds kort Compass ontdekt. Compass is een stylesheet authoring framework. En toen vroeg ik mij het volgende af. Django & Compass vormen tezamen een geweldige tool voor het ontwerpen van website schermen (User Interaction Design).
+Ik gebruik al een tijdlang Django en heb sinds kort Compass ontdekt. Compass is een stylesheet authoring framework. En toen realiseerde ik mij het volgende. Django & Compass vormen tezamen een geweldige tool voor het ontwerpen van website schermen (User Interaction Design).
 
 In plaats van papieren ontwerpen, zg. wireframes, Photoshop plaatjes of Firework plaatjes, kun je een compleet functionele en dus klikbare website maken met behulp van Django. En met behulp van Compass kun de site heel snel vormgeven.
+
+Het voordeel van een klikbare, functionele site is dat je daarmee gemakkelijker kan communiceren met eindgebruikers en bijvoorbeeld usability studies kan uitvoeren.
+
+Voor veel eindgebruikers is conceptueel denken heel lastig. En toch vragen we van gebruikers omdat te doen en vragen we zelfs wat er ontbreekt aan het concept en wat er beter aan kan. Het is niet gek dat we dan niet de juiste dingen te horen krijgen.
+
+Bouw snel, continu, release vaak en laat je gebruiker vaak naar het resultaat kijken. En wees niet bang om dingen weg te gooien en opnieuw te doen. Je gooit veel gemakkelijker iets weg waar je slechts weinig tijd aan hebt besteedt dan wanneer je er dagen of weken mee bezig bent geweest.
 
 Met deze demo hoop ik aan te geven dat het maken van een functioneel werkende schets van een website evenveel tijd kost als het maken van een traditioneel wireframe of statisch plaatje. Met als voordeel dat je op deze schets gewoon kunt voortborduren en de site kan uitbouwen tot een productierijpe website.
 
@@ -34,7 +39,10 @@ Je hebt de volgende software nodig.
 
 *	[Django](http://www.djangoproject.com/download/). Ik heb voor de demo Django 1.1.1 gebruikt. **TODO** aangeven hoe ik het geinstalleerd heb.
 
-* **TODO** [Compass](http://wiki.github.com/chriseppstein/compass/getting-started) installatie
+* [Compass](http://wiki.github.com/chriseppstein/compass/getting-started). Voor Compass hebben we Ruby nodig. Op Mac OS X staat Ruby al. Vanaf de command prompt voer de volgende commando's uit:
+
+	sudo gem update --system
+	sudo gem install compass
 
 ## Wat gaan we bouwen?
 
@@ -493,6 +501,59 @@ We hebben nu een compleet werkende website! Alleen hij ziet er nog niet uit. Dat
 
 ## De site vormgeven met behulp van Compass
 
+Voer de volgende commando's vanuit de hoofddirectory van het djangodemo project:
 
+	mkdir static
+	mkdir static/css
+	cd static/css
+	compass -f blueprint djangodemo
 
+We maken gebruik van het blueprint CSS framework. Compass maakt nu een hele serie directories en bestanden aan. Ook geeft Compass nu aanwijzingen om de CSS in je HTML te linken. Neem deze aanwijzingen over in het base.html bestand, de head van base.html ziet er nu als volgt uit:
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+		<title>Demo Django & Compass</title>
+		<link href="/static/css/djangodemo/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link href="/static/css/djangodemo/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+		<!--[if lt IE 8]>
+			<link href="/static/css/djangodemo/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<![endif]-->
+	</head>
+	
+Als we kijken of de CSS wordt opgepikt dan blijkt dat niet zo te zijn. De url naar de static directory wordt nog niet opgepikt. Dat moeten we even rechttrekken. Open urls.py en wijzig deze in:
+
+	from django.conf.urls.defaults import *
+	
+	# Uncomment the next two lines to enable the admin:
+	from django.contrib import admin
+	admin.autodiscover()
+	
+	urlpatterns = patterns("django.views.generic.simple",
+		
+		# Hoofdpagina's
+		(r'^$', "direct_to_template", {'template': 'index.html'}),
+	)
+	
+	urlpatterns = urlpatterns + patterns('',
+		# Example:
+		# (r'^djangodemo/', include('djangodemo.foo.urls')),
+	
+		# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+		# to INSTALLED_APPS to enable admin documentation:
+		# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	
+		# Uncomment the next line to enable the admin:
+		(r'^admin/', include(admin.site.urls)),
+		
+		# Subjecten
+		(r'^subjecten/', include("djangodemo.subjecten.urls")),
+		
+		# Static media
+		# ONLY USE THIS FOR THE DEVELOPMENT SERVER. NEVER USE THIS IN PRODUCTION.
+		(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/berry/git/djangodemo/static'}),
+	)
+
+Onder aan het bestand heb we een regel toegevoegd waarmee de statische media in de directory `/Users/berry/git/djangodemo/static` worden geserveerd door de development server. Als je nu een pagina bekijkt dan zie je dat de CSS netjs wordt opgepikt. De layout is iets gewijzigd t.o.v. van eerst.
+
+Nu gaan kunnen we de site gaan stijlen.
 ** waiting for more **

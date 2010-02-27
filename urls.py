@@ -23,4 +23,8 @@ urlpatterns = urlpatterns + patterns('',
     
     # Subjecten
     (r'^subjecten/', include("djangodemo.subjecten.urls")),
+    
+    # Static media
+    # ONLY USE THIS FOR THE DEVELOPMENT SERVER. NEVER USE THIS IN PRODUCTION.
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/berry/git/djangodemo/static'}),
 )
