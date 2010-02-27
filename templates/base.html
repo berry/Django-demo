@@ -1,0 +1,31 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"> 
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+		<title>Demo Django & Compass</title>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Demo Django & Compass</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="/subjecten">Cliënten</a></li>
+			</ul>
+		</div>
+		<div id="content">
+			{% block content %}
+				<p>-</p>
+			{% endblock %}
+		</div>
+		<div id="footer"> 
+			<ul> 
+				<li><a href="/">Home</a></li> 
+				<li><a href="#">About</a></li> 
+				<li><a href="#">Contact</a></li> 
+				<li>&copy;</li> 
+			</ul> 
+		</div> 
+	</body>
+</html>

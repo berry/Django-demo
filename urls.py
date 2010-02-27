@@ -4,7 +4,13 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns("django.views.generic.simple",
+	
+	# Hoofdpagina's
+	(r'^$', "direct_to_template", {'template': 'index.html'}),
+)
+
+urlpatterns = urlpatterns + patterns('',
     # Example:
     # (r'^djangodemo/', include('djangodemo.foo.urls')),
 

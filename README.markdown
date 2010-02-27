@@ -405,4 +405,94 @@ Dit is wel een hele eenvoudige weergave van een client. Maar goed, we zijn nog s
 
 We gaan nu nog een stukje van de kracht van Django templates zien: inheritance van templates.
 
+Maak het bestand templates/subjecten/base.html. Dit bestand gaat de basis html bevatten, laat het als volgt uit zien:
+
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+		"http://www.w3.org/TR/html4/strict.dtd"> 
+	<html>
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+			<title>Demo Django & Compass</title>
+		</head>
+		<body>
+			<div id="header">
+				<h1>Demo Django & Compass</h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li><a href="/subjecten">Cliënten</a></li>
+				</ul>
+			</div>
+			<div id="content">
+				{% block content %}
+					<p>-</p>
+				{% endblock %}
+			</div>
+			<div id="footer"> 
+				<ul> 
+					<li><a href="/">Home</a></li> 
+					<li><a href="#">About</a></li> 
+					<li><a href="#">Contact</a></li> 
+					<li>&copy;</li> 
+				</ul> 
+			</div> 
+		</body>
+	</html>
+
+Wees er zeker van dat je het bestand als UTF-8 opslaat.
+
+We hebben een nette HTML basis template met daarin een header block, een menu block, een content block en een footer block. Het content block heb ik ook voorzien van een Django template block aanduiding.
+
+Wijzig templates/subjecten/index.html en templates/subjecten/details.html en zet op de allereerste regel van deze twee bestanden:
+
+	{% extends "base.html" %}
+
+Als je naar de subjecten pagina browsed dan zie je een complete HTML pagina met een titel, een menu en een footer.
+
+Wat we nog missen is een begin pagina voor onze site. Maak het bestand templates/index.html aan en laat het als volgt uit zien:
+
+	{% extends "base.html" %}
+	
+	{% block content %}
+		<p>Welkom bij deze demo van Django & Compass waarin we proberen aan te tonen 
+		dat deze combinatie een heel mooie User Interaction Design tool kan zijn.</p>
+	{% endblock content %}
+
+Echter, we hebben nog geen url en nog geen view gedefinieerd. Dat gaan we dus ook even doen. Urls.py komt er als volgt uit te zien:
+
+	from django.conf.urls.defaults import *
+	
+	# Uncomment the next two lines to enable the admin:
+	from django.contrib import admin
+	admin.autodiscover()
+	
+	urlpatterns = patterns("django.views.generic.simple",
+		
+		# Hoofdpagina's
+		(r'^$', "direct_to_template", {'template': 'index.html'}),
+	)
+	
+	urlpatterns = urlpatterns + patterns('',
+		# Example:
+		# (r'^djangodemo/', include('djangodemo.foo.urls')),
+	
+		# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+		# to INSTALLED_APPS to enable admin documentation:
+		# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	
+		# Uncomment the next line to enable the admin:
+		(r'^admin/', include(admin.site.urls)),
+		
+		# Subjecten
+		(r'^subjecten/', include("djangodemo.subjecten.urls")),
+	)
+
+We gebruiken hier een generic view genaamd `direct_to_template` waarmee je snel views in elkaar kan zetten. Er zijn meer generic views. O.a. een master-detail view. Die zullen we later gebruiken.
+
+We hebben nu een compleet werkende website! Alleen hij ziet er nog niet uit. Dat gaan we nu doen. We gaan de site opmaken.
+
+## De site vormgeven met behulp van Compass
+
+
+
 ** waiting for more **
