@@ -397,23 +397,20 @@ Maak het bestand templates/subjecten/detail.html:
 Open dit bestand en laat het als volgt uit zien:
 
 	{% block content %}
+		<h2>Cliëntgegevens van {{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</h2>
 		<table>
 			<tr>
-				<th>Naam</th>
-				<th>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</th>
+				<th>Woonadres</th>
+				<th>Correspondentieadres</th>
 			</tr>
 			<tr>
-				<td>Woonadres</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Straat</td>
-				<td>{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}
+				<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}<br/>
+				{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}<br/>
+				{{ subject.woonadres_postcode|upper }}&nbsp;&nbsp;{{ subject.woonadres_woonplaats|upper }}
 				</td>
-			</tr>
-			<tr>
-				<td>Postcode en woonplaats</td>
-				<td>{{ subject.woonadres_postcode|upper }} {{ subject.woonadres_woonplaats|upper }}
+				<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}<br/>
+				{{ subject.correspondentie_straatnaam }} {{ subject.correspondentie_huisnummer }} {{ subject.correspondentie_huisnummer_toevoeging }}<br/>
+				{{ subject.correspondentie_postcode|upper }}&nbsp;&nbsp;{{ subject.correspondentie_woonplaats|upper }}
 				</td>
 			</tr>
 		</table>
