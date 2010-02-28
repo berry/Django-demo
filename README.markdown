@@ -36,14 +36,18 @@ Uiteindelijk kun je de website, gebruikmakend van dezelfde technologie als waar 
 
 Je hebt de volgende software nodig.
 
-*	[Python](http://python.org/), reeds aanwezig op Mac OS X, Linux, etc. Op Windows dien je het nog te installeren.
+*	[Python 2.5](http://python.org/), reeds aanwezig op Mac OS X, Linux, etc. Op Windows dien je het nog te installeren.
 
-*	[Django](http://www.djangoproject.com/download/). Ik heb voor de demo Django 1.1.1 gebruikt. **TODO** aangeven hoe ik het geinstalleerd heb.
+*	[Django](http://www.djangoproject.com/download/). Ik heb voor de demo Django 1.1.1 gebruikt. Ik heb Django-1.1.1 uitgepakt en de directory Django-1.1.1 in mijn eigen homedirectory "/Users/berry" geplaatst.
 
 * [Compass](http://wiki.github.com/chriseppstein/compass/getting-started). Voor Compass hebben we Ruby nodig. Op Mac OS X staat Ruby al. Vanaf de command prompt voer de volgende commando's uit:
 
 	sudo gem update --system
 	sudo gem install compass
+
+* Als database gebruiken we SQLite. En SQLite wordt meegeleverd met Python 2.5. Dus dat is ook al op de computer aanwezig.
+
+Dat is alles om aan de slag te kunnen.
 
 ## Wat gaan we bouwen?
 
