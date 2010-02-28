@@ -1,7 +1,12 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block content %}
+	<h2>Lijst van cliënten</h2>
 	<table>
+		<tr>
+			<th>Naam</th>
+			<th>Woonplaats</th>
+		</tr>
 		{% for subject in subjecten %}
 		<tr>
 			<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a></td>

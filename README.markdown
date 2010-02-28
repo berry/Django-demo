@@ -1,4 +1,5 @@
-﻿# Django & Compass gebruiken als een User Interaction Design tool
+﻿
+# Django & Compass gebruiken als een User Interaction Design tool
 
 * By: Berry Groenendijk
 * Date: 25 february 2010
@@ -364,7 +365,12 @@ Maak het bestand templates/subjecten/index.html:
 Laat templates/subjecten/index.html er als volgt uit zien:
 
 	{% block content %}
+		<h2>Lijst van cliënten</h2>
 		<table>
+			<tr>
+				<th>Naam</th>
+				<th>Woonplaats</th>
+			</tr>
 			{% for subject in subjecten %}
 			<tr>
 				<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a></td>
@@ -386,28 +392,28 @@ Maak het bestand templates/subjecten/detail.html:
 
 Open dit bestand en laat het als volgt uit zien:
 
-{% block content %}
-	<table>
-		<tr>
-			<td>Naam</td>
-			<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</td>
-		</tr>
-		<tr>
-			<td>Woonadres</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>Straat</td>
-			<td>{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}
-			</td>
-		</tr>
-		<tr>
-			<td>Postcode en woonplaats</td>
-			<td>{{ subject.woonadres_postcode|upper }} {{ subject.woonadres_woonplaats|upper }}
-			</td>
-		</tr>
-	</table>
-{% endblock content %}
+	{% block content %}
+		<table>
+			<tr>
+				<th>Naam</th>
+				<th>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</th>
+			</tr>
+			<tr>
+				<td>Woonadres</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Straat</td>
+				<td>{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}
+				</td>
+			</tr>
+			<tr>
+				<td>Postcode en woonplaats</td>
+				<td>{{ subject.woonadres_postcode|upper }} {{ subject.woonadres_woonplaats|upper }}
+				</td>
+			</tr>
+		</table>
+	{% endblock content %}
 
 Dit is wel een hele eenvoudige weergave van een client. Maar goed, we zijn nog steeds aan het schetsen. We kunnen nu in de lijst van clienten klikken op een client en krijgen dan de details van de client te zien. De eerste contouren van een functionele en klikbare website ontstaan.
 
@@ -556,4 +562,69 @@ Als we kijken of de CSS wordt opgepikt dan blijkt dat niet zo te zijn. De url na
 Onder aan het bestand heb we een regel toegevoegd waarmee de statische media in de directory `/Users/berry/git/djangodemo/static` worden geserveerd door de development server. Als je nu een pagina bekijkt dan zie je dat de CSS netjs wordt opgepikt. De layout is iets gewijzigd t.o.v. van eerst.
 
 Nu gaan kunnen we de site gaan stijlen.
-** waiting for more **
+
+Open een command prompt en ga naar de directory `/Users/berry/git/djangodemo/static/css/djangodemo`. Dit is de directory waar het Compass project is aangemaakt. We laten Compass deze directory bewaken, zodat iedere wijziging meteen wordt gecompileerd tot CSS bestanden:
+
+	compass -w
+
+We gaan nu in de subdirectory stylesheets van het Compass project het bestand screen.sass aanpassen. Sass is een meta-taal waarmee je makkelijker, overzichtelijker en met meer kracht CSS kan schrijven. Vooral het gebruik van import, variabelen en mixins maakt Sass heel krachtig. Je kunt nu heel modulair te werk gaan in CSS. Compass zorgt er voor jou voor dat een en ander weer naar CSS wordt omgevormd. Deze techniek scheelt echt enorm veel tijd bij het maken en onderhouden van CSS. 
+
+Screen.sass ziet er nu als volgt uit:
+
+	// This import applies a global reset to any page that imports this stylesheet.
+	@import blueprint/reset.sass
+	// To configure blueprint, edit the partials/base.sass file.
+	@import partials/base.sass
+	// Import all the default blueprint modules so that we can access their mixins.
+	@import blueprint
+	// Import compass utilities
+	@import compass/utilities.sass
+	
+	// djangodemo layout
+	+blueprint-typography("body")
+	body
+	  +container
+	  !sidebar_columns = floor(!blueprint_grid_columns / 4)
+	  #menu
+		+column(!sidebar_columns)
+		+no-bullets
+	  #content
+		+column(!blueprint_grid_columns - !sidebar_columns, true)
+	  #footer, #header
+		+column(!blueprint_grid_columns)
+	  #footer
+		background-color = #eee
+		margin-top = 1em
+		+horizontal-list(5px)
+		
+	table
+	  +table-scaffolding
+	  th
+		background-color = #eee
+		text-align = "left"
+
+De website ziet er nu eenvoudig met wel gestyled uit. We maken hier gebruik van het Blueprint CSS framework. Dit framework biedt een mooi grid waarmee je een webpagina strak kan indelen in functionele kolommen en blokken.
+
+Compass biedt ook een aantal handige mixins waarmee je bijv. een unordered-list gemakkelijk horizontaal kan weergeven. Zoals we in de footer hebben gedaan.
+
+Bug: op mijn laptop staat de titel op de homepage helemaal bovenaan, terwijl die op alle andere pagina's netjes ruimte heeft bovenaan. Geen idee waarom dat dit is. Ik ben dan ook geen HTML-CSS expert.
+
+Even terugkijken: we hebben nu een complete, functionele en klikbare website die ook nog eens (eenvoudig) gestyled is. Plus dat we een admin interface hebben waarmee we onze tabellen kunnen vullen en onderhouden.
+
+Dit vormt onze eerste iteratie en de basis voor de rest van onze ontwikkelingen.
+
+## Referenties
+
+* De [Django tutorial](http://docs.djangoproject.com/en/dev/intro/tutorial01/) is een zeer goede introductie in het gebruik van Django. Deze demo volgt grotendeels ook deze introductie. De introductie legt op onderdelen echter iets meer uit. Ik heb slechts een introductie op de introductie gegeven.
+
+* De grote kracht van Django is de [documentatie](http://docs.djangoproject.com/en/1.1/). Algemeen wordt erkend dat deze documentatie zeer goed geschreven is en mede de basis vormt voor het succes van Django. Je vindt heel gemakkelijk dingen terug en je leert dan ook heel snel meer van Django.
+
+* Voor het gebruik van [Compass](http://wiki.github.com/chriseppstein/compass/) is een screencast gemaakt. Deze is informatief maar duurt wel wat lang (50 minuten). Het laat wel zien hoe krachtig Compass is.
+
+* Compass bouwt voort op [Sass](http://sass-lang.com/about.html).
+
+* Deze [Django demo](http://github.com/berry/Django-demo) heb ik op Github geplaatst. Github is gratis voor open source projecten en biedt een geweldige webinterface op [Git](http://git-scm.com/).
+
+* Django is geschreven in [Python](http://python.org/). Python is een krachtige dynamische programmeertaal. Ontstaan bij het [CWI](http://www.cwi.nl/) in Amsterdam en geschreven door [Guido van Rossum](http://www.python.org/~guido/). Python kent een (zeer) grote schare aanhangers en wordt door zeer vele organisaties gebruikt. Python leren is gemakkelijk. In zeer korte tijd ben je als programmeur als heel effectief bezig met het maken van functionele programma's. Python kent, zeker in tegenstelling tot Java, maar weinig boeken. Dat is geen indicatie dat Python weinig gebruikt wordt, maar een indicatie van de eenvoud van de taal. 
+
+* Compass en Sass zijn geschreven in [Ruby](http://www.ruby-lang.org/en/). Ruby heeft dynamische programmeertalen enorm populair gemaakt. Python en Ruby worden heel vaak als elkaars concurrenten gezien. Maar, er is ruimte genoeg voor beide talen.

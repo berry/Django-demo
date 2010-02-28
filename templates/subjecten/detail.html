@@ -1,14 +1,11 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block content %}
+	<h2>Cliëntgegevens van {{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</h2>
 	<table>
 		<tr>
-			<td>Naam</td>
-			<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</td>
-		</tr>
-		<tr>
-			<td>Woonadres</td>
-			<td></td>
+			<th>Woonadres</th>
+			<th></th>
 		</tr>
 		<tr>
 			<td>Straat</td>
