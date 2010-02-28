@@ -27,4 +27,5 @@ urlpatterns = urlpatterns + patterns('',
     # Static media
     # ONLY USE THIS FOR THE DEVELOPMENT SERVER. NEVER USE THIS IN PRODUCTION.
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/berry/git/djangodemo/static'}),
+    (r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/berry/git/djangodemo/static/images'}),    
 )

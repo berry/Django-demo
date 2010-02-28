@@ -607,11 +607,95 @@ De website ziet er nu eenvoudig met wel gestyled uit. We maken hier gebruik van 
 
 Compass biedt ook een aantal handige mixins waarmee je bijv. een unordered-list gemakkelijk horizontaal kan weergeven. Zoals we in de footer hebben gedaan.
 
-Bug: op mijn laptop staat de titel op de homepage helemaal bovenaan, terwijl die op alle andere pagina's netjes ruimte heeft bovenaan. Geen idee waarom dat dit is. Ik ben dan ook geen HTML-CSS expert.
+Bug: op mijn laptop staat de titel op de homepage helemaal bovenaan, terwijl die op alle andere pagina's netjes ruimte heeft bovenaan. Geen idee waarom dat dit is. Ik ben dan ook geen HTML-CSS expert. [28 feb 2010: bug opgelost. De index.html pagina in de hoofddirectory van het project was opgeslagen als UTF-8 zonder BOM, terwijl alle andere pagina's in UTF-8 met BOM waren opgeslagen. Index.html ook in UTF-8 met BOM opgeslagen en toen zag de startpagina er wel goed uit.]
 
 Even terugkijken: we hebben nu een complete, functionele en klikbare website die ook nog eens (eenvoudig) gestyled is. Plus dat we een admin interface hebben waarmee we onze tabellen kunnen vullen en onderhouden.
 
 Dit vormt onze eerste iteratie en de basis voor de rest van onze ontwikkelingen.
+
+## CSS Debug grid
+
+In Blueprint kun je ook een debug grid aanzetten. Dit grid geeft je visuele aanwijzingen over de verdeling van de content over de kolommen van het grid.
+
+Wijzig de urls.py in de hoofddirectory van het project naar:
+
+	from django.conf.urls.defaults import *
+	
+	# Uncomment the next two lines to enable the admin:
+	from django.contrib import admin
+	admin.autodiscover()
+	
+	urlpatterns = patterns("django.views.generic.simple",
+		
+		# Hoofdpagina's
+		(r'^$', "direct_to_template", {'template': 'index.html'}),
+	)
+	
+	urlpatterns = urlpatterns + patterns('',
+		# Example:
+		# (r'^djangodemo/', include('djangodemo.foo.urls')),
+	
+		# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+		# to INSTALLED_APPS to enable admin documentation:
+		# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	
+		# Uncomment the next line to enable the admin:
+		(r'^admin/', include(admin.site.urls)),
+		
+		# Subjecten
+		(r'^subjecten/', include("djangodemo.subjecten.urls")),
+		
+		# Static media
+		# ONLY USE THIS FOR THE DEVELOPMENT SERVER. NEVER USE THIS IN PRODUCTION.
+		(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/berry/git/djangodemo/static'}),
+		(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '/Users/berry/git/djangodemo/static/images'}),    
+	)
+
+We hebben een url pad toegevoegd voor images. We dienen de directory waarnaar verwezen wordt ook aan te maken. Vanuit de hoofddirectory van het project voer uit:
+
+	mkdir static/images
+	cp static/css/djangodemo/images/* ./static/images/
+	
+We hebben ook de plaatjes van de Compass directory naar de static/images gekopieerd.
+
+Nu kunnen we in de .sass bestanden +blueprint-debug en +showgrid toevoegen aan het bestand screen.sass:
+
+	// This import applies a global reset to any page that imports this stylesheet.
+	@import blueprint/reset.sass
+	// To configure blueprint, edit the partials/base.sass file.
+	@import partials/base.sass
+	// Import all the default blueprint modules so that we can access their mixins.
+	@import blueprint
+	// Import compass utilities
+	@import compass/utilities.sass
+	
+	// djangodemo layout
+	+blueprint-typography("body")
+	+blueprint-debug
+	body
+	  // Uncomment next line to make the debug grid visible
+	  //+showgrid
+	  +container
+	  !sidebar_columns = floor(!blueprint_grid_columns / 4)
+	  #menu
+		+column(!sidebar_columns)
+		+no-bullets
+	  #content
+		+column(!blueprint_grid_columns - !sidebar_columns, true)
+	  #footer, #header
+		+column(!blueprint_grid_columns)
+	  #footer
+		background-color = #eee
+		margin-top = 1em
+		+horizontal-list(5px)
+		
+	table
+	  +table-scaffolding
+	  th
+		background-color = #eee
+		text-align = "left"
+
+Het +showgrid commando kun je nu aan en uitzetten. Zet je +showgrid aan dan wordt op de website een plaatje getoond met daarin de kolommen aangegeven.
 
 ## Referenties
 

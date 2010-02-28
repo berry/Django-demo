@@ -87,6 +87,8 @@ caption { background: #eee; }
 
 .loud { color: #111111; }
 
+.showgrid { background: url('/images/grid.png?1267263512'); }
+
 body { width: 950px; margin: 0 auto; overflow: hidden; display: inline-block; }
 body { display: block; }
 body #menu { display: inline; float: left; margin-right: 10px; width: 230px; }
