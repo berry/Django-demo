@@ -1,7 +1,20 @@
 ﻿{% extends "base.html" %}
 
+{% load subjecten_extras %}
+
 {% block content %}
 	<h2>Cliëntgegevens van {{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</h2>
+	<table>
+		<tr>
+			<th>Details</th>
+		</tr>
+		<tr>
+			<td>Burgerservicenummer: &nbsp;{{ subject.bsn }}</td>
+		</tr>
+		<tr>
+			<td>Geboortedatum: &nbsp;{{ subject.geboortedatum|date:"d M Y" }} ({{ subject.geboortedatum|leeftijd }} jaar)</td>
+		</tr>
+	</table>	
 	<table>
 		<tr>
 			<th>Woonadres</th>
@@ -17,5 +30,21 @@
 			{{ subject.correspondentie_postcode|upper }}&nbsp;&nbsp;{{ subject.correspondentie_woonplaats|upper }}
 			</td>
 		</tr>
+	</table>
+	<table>
+		<tr>
+			<th>Contact</th>
+		</tr>
+		<tr>
+			<td>
+				e-mail: {{ subject.email }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				telefoon: {{ subject.telefoonnummer }}
+			</td>
+		</tr>
+
 	</table>
 {% endblock content %}

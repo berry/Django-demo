@@ -17,6 +17,7 @@ class Subject(models.Model):
 	correspondentie_woonplaats = models.CharField(max_length=200)
 	telefoonnummer = models.CharField(max_length=15)
 	email = models.EmailField()
+	geboortedatum = models.DateField()
 	
 	class Meta:
 		verbose_name_plural = "subjecten"

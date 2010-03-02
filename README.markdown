@@ -8,6 +8,10 @@
 
 This demo is targeted at a Dutch audience. So I will switch to Dutch. Now.
 
+## Licentie/License
+
+**TODO** - licentiemodel bepalen. Vooralsnog ligt het copyright volledig bij de auteur en eigenaar van deze github repository.
+
 ## Doel
 
 Ik gebruik al een tijdlang Django en heb sinds kort Compass ontdekt. Compass is een stylesheet authoring framework. En toen realiseerde ik mij het volgende. Django & Compass vormen tezamen een geweldige tool voor het ontwerpen van website schermen (User Interaction Design).
@@ -610,9 +614,19 @@ Compass biedt ook een aantal handige mixins waarmee je bijv. een unordered-list 
 
 Bug: op mijn laptop staat de titel op de homepage helemaal bovenaan, terwijl die op alle andere pagina's netjes ruimte heeft bovenaan. Geen idee waarom dat dit is. Ik ben dan ook geen HTML-CSS expert. [28 feb 2010: bug opgelost. De index.html pagina in de hoofddirectory van het project was opgeslagen als UTF-8 zonder BOM, terwijl alle andere pagina's in UTF-8 met BOM waren opgeslagen. Index.html ook in UTF-8 met BOM opgeslagen en toen zag de startpagina er wel goed uit.]
 
-Even terugkijken: we hebben nu een complete, functionele en klikbare website die ook nog eens (eenvoudig) gestyled is. Plus dat we een admin interface hebben waarmee we onze tabellen kunnen vullen en onderhouden.
+## Even terugkijken...
 
-Dit vormt onze eerste iteratie en de basis voor de rest van onze ontwikkelingen.
+We hebben nu een complete, functionele, werkende en klikbare website die ook nog eens (eenvoudig) gestyled is. Plus dat we een admin interface hebben waarmee we onze tabellen kunnen vullen en onderhouden.
+
+Dit vormt het einde van onze eerste iteratie. Een ruwe schets van onze Mona Lisa is uitgewerkt. We kunnen deze schets nu al aan onze klant of eindgebruikers laten zien.
+
+Sterker nog onze eindgebruikers zouden nu al mee aan het werk kunnen gaan met de website. Bijv. door de cliënten database te gaan vullen. Hoewel de website zelf nog maar erg weinig functionaliteit biedt. Maar, als eindgebruiker zou men nu al iets kunnen gaan zeggen over de layout of bijv. de gegevens die men mist bij een cliënt. En dat al na een klein uurtje werk. Moet je nagaan wat je na een dag werken in overleg met je eindgebruikers al bereikt zou kunnen hebben.
+
+Plus dat deze versie van de website de basis vormt voor de rest van onze ontwikkelingen.
+
+Hieronder volgen, minder uitgebreidt nog de nodige Django en Compass tips en notities over de uitbreidingen en wijzigingen op onze demo. De resultaten hiervan zijn in [Github](http://github.com/berry/Django-demo) terug te vinden. Bekijk vooral deze source code, lees het en leer ervan.
+
+Onderaan dit document vindt je ook een aantal referenties en links naar websites met meer informatie over Django, Compass, etc.
 
 ## CSS Debug grid
 
