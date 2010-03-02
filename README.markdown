@@ -624,7 +624,7 @@ Sterker nog onze eindgebruikers zouden nu al mee aan het werk kunnen gaan met de
 
 Plus dat deze versie van de website de basis vormt voor de rest van onze ontwikkelingen.
 
-Hieronder volgen, minder uitgebreidt nog de nodige Django en Compass tips en notities over de uitbreidingen en wijzigingen op onze demo. De resultaten hiervan zijn in [Github](http://github.com/berry/Django-demo) terug te vinden. Bekijk vooral deze source code, lees het en leer ervan.
+Hieronder volgen, minder uitgebreidt, nog de nodige Django en Compass tips en notities over de uitbreidingen en wijzigingen op deze demo. De resultaten hiervan zijn in [Github](http://github.com/berry/Django-demo) terug te vinden. Bekijk vooral deze source code, lees het en leer ervan.
 
 Onderaan dit document vindt je ook een aantal referenties en links naar websites met meer informatie over Django, Compass, etc.
 
