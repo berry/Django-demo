@@ -40,9 +40,9 @@ Uiteindelijk kun je de website, gebruikmakend van dezelfde technologie als waar 
 
 Je hebt de volgende software nodig.
 
-*	[Python 2.5](http://python.org/), reeds aanwezig op Mac OS X, Linux, etc. Op Windows dien je het nog te installeren.
+* [Python 2.5](http://python.org/), reeds aanwezig op Mac OS X, Linux, etc. Op Windows dien je het nog te installeren.
 
-*	[Django](http://www.djangoproject.com/download/). Ik heb voor de demo Django 1.1.1 gebruikt. Ik heb Django-1.1.1 uitgepakt en de directory Django-1.1.1 in mijn eigen homedirectory "/Users/berry" geplaatst.
+* [Django](http://www.djangoproject.com/download/). Ik heb voor de demo Django 1.1.1 gebruikt. Ik heb Django-1.1.1 uitgepakt en de directory Django-1.1.1 in mijn eigen homedirectory "/Users/berry" geplaatst.
 
 * [Compass](http://wiki.github.com/chriseppstein/compass/getting-started). Voor Compass hebben we Ruby nodig. Op Mac OS X staat Ruby al. Vanaf de command prompt voer de volgende commando's uit:
 
@@ -708,9 +708,110 @@ Sterker nog onze eindgebruikers zouden nu al mee aan het werk kunnen gaan met de
 
 Plus dat deze versie van de website de basis vormt voor de rest van onze ontwikkelingen.
 
-Hieronder volgen, minder uitgebreidt, nog de nodige Django en Compass tips en notities over de uitbreidingen en wijzigingen op deze demo. De resultaten hiervan zijn in [Github](http://github.com/berry/Django-demo) terug te vinden. Bekijk vooral deze source code, lees het en leer ervan.
+Hieronder volgen, minder uitgebreid, nog de nodige Django en Compass tips en notities over de uitbreidingen en wijzigingen op deze demo. De resultaten hiervan zijn in [Github](http://github.com/berry/Django-demo) terug te vinden. Bekijk vooral deze source code, lees het en leer ervan.
 
 Onderaan dit document vindt je ook een aantal referenties en links naar websites met meer informatie over Django, Compass, etc.
+
+## Formulieren
+
+We gaan formulieren toevoegen aan de website. Django ondersteunt het maken van formulieren goed. Zo kun je automatisch formulieren uit modellen genereren. Maar, je blijft geheel vrij in de opmaak van het formulier. Een krachtig functionaliteit is dat je zelf zogenaamde validators kan schrijven waarmee je de ingevoerde data kan valideren.
+
+Allereerst definieren we aantal urls in subjecten/urls.py:
+
+	(r'^(?P<subject_id>	\d+)/edit/$', 'edit'),
+	(r'^(?P<subject_id>\d+)/wijzig/$', 'edit'),
+	(r'^nieuw/$', 'new'),
+	(r'^new/$', 'new'),
+
+Voor het voorbeeld heb ik zowel Nederlands-talige en Engels-talige urls voor het wijzigen van bestaande cliënten en voor het toevoegen van nieuwe cliënten toegevoegd. De urls verwijzen naar een tweetal views in subjecten/views.py: 'edit' en 'new'.
+
+	def new(request):
+		'''Show form to add new subject'''
+	
+		if request.method == "POST":
+			form = SubjectForm(request.POST) #prefilled form from POST data
+			if form.is_valid():
+				new_subject = form.save()
+				return HttpResponseRedirect("/subjecten/%s/" % new_subject.pk)
+		else:
+			form = SubjectForm() #empty form
+		return render_to_response('subjecten/new_subject.html', {'form': form})
+	
+	def edit(request, subject_id = None):
+		'''Show form to change an existing subject'''
+	
+		if request.method == "POST":
+			subject = Subject.objects.get(pk = subject_id)
+			form = SubjectForm(request.POST, instance = subject)
+			if form.is_valid():
+				new_subject = form.save()
+				return HttpResponseRedirect("/subjecten/%s/" % new_subject.pk)
+		else:
+			subject = Subject.objects.get(pk = subject_id)
+			form = SubjectForm(instance = subject)
+		return render_to_response('subjecten/edit_subject.html', {'form': form, 'subject': subject})
+
+De structuur van beide functies is gelijk. Je zou beide functies zelfs in één functie kunnen zetten. Dat is een kwestie van smaak. In de functie wordt allereerst gekeken of de request een POST of een GET is. Bij een GET wordt simpelweg een leeg formulier gemaakt of wordt, bij edit, het formulier voorgevuld met de data van de cliënt die we aan het bekijken zijn. Om een cliënt te kunnen wijzigen die je dus eerst een cliënt geselecteerd te hebben.
+
+Bij een POST vullen we het formulier met de data uit de POST. Middels `form.is_valid()` worden alle data validaties (de `clean()` functies) op alle invoervelden uitgevoerd. Treden er geen validatiefouten op dan kunnen we het formulier opslaan en redirecten we de gebruiker naar de cliënten pagina. Treden er wel validatiefouten op dan wordt de form mét de validatiefouten opnieuw aan de gebruiker getoond zodat de gebruiker de fouten kan herstellen.
+
+Het formulier `SubjectForm` heb ik gedefinieerd in subjecten/models.py. De formulier definities kun je ook in een apart bestand zetten. Ook dat is een kwestie van smaak en keuze. In subjecten/models.py had ik in eerste instantie het volgende toegevoegd.
+
+	from django import forms
+
+	# Forms		
+	class SubjectForm(forms.ModelForm):
+		
+		class Meta:
+			model = Subject
+
+Middels ModelForm wordt een formulier aangemaakt op basis van een model. Dit is een hele snelle manier om een formulier te definiëren. En dit is voldoende voor een werkend formulier. Voor de verschillende invoervelden worden default DataFields gebruikt die default validaties uitvoeren. Zo wordt een e-mailadres default gevalideerd.
+
+Maar, al snel krijg je de behoeft aan aangepaste validaties. Als voorbeeld heb ik een validatie geschreven voor Nederlandse postcodes. En om te laten zien hoe je overerving kan gebruiken om validaties uit te breiden heb ik ook een validatie geschreven voor Amsterdamse postcodes. Het formulier met de validaties ziet er in subjecten/models.py dan zo uit:
+
+	import re
+
+	from django import forms
+
+	# Form validators
+	class DutchPostcodeField(forms.Field):
+		def clean(self, value):
+			'''Check that input is a valid Dutch postcode'''
+			m = re.match(r'^([0-9]{4})\s?([a-zA-Z]{2}$)', value) # pattern: 1234 AA
+			if not m or len(m.groups()) != 2:
+				raise forms.ValidationError('Een Nederlandse postcode ziet er als volgt uit: 1234 AA')
+			return "%s %s" % (m.groups()[0], m.groups()[1].upper())
+
+	class AmsterdamPostcodeField(DutchPostcodeField):
+		def clean(self, value):
+			'''Check that input is a valid Dutch postcode and 
+			check that Dutch postcode is within the Amsterdam 
+			postcode ranges.
+			'''
+			value = super(AmsterdamPostcodeField, self).clean(value)
+			n = int(value[0:4])
+			if not(1000 <= n <= 1099) and not(1100 <= n <= 1108):
+				# postcode not in Amsterdam ranges
+				raise forms.ValidationError('Voer een Amsterdamse postcode in.')
+			return value
+
+	# Forms		
+	class SubjectForm(forms.ModelForm):
+		woonadres_postcode = AmsterdamPostcodeField()
+		correspondentie_postcode = DutchPostcodeField()
+	
+		class Meta:
+			model = Subject
+
+In `DutchPostcodeField` wordt een dataveld gedefinieerd met een eigen validatie functie. Validaties vinden in Django plaats in de `clean()` functie. Door je eigen `clean()` functie te schrijven, schrijf je dus je eigen validatie regels. 
+
+In `DutchPostcodeField` kijken we met behulp van een reguliere expressie of het patroon van de input voldoet aan het patroon van een Nederlandse postcode. Voldoet de input niet dan volgt er een formulier validatiefout die uiteindelijk aan de gebruiker wordt getoond. De uitvoer van de `clean()` functie is een, in dit geval, een opgeschoonde postcode waarvan de letter ook in bovenkast gezet zijn. Postcodes worden hierdoor op een uniforme manier in de database opgeslagen.
+
+Het nieuwe veldtype `AmsterdamPostcodeField` erft over van `DutchPostcodeField`. Een Amsterdamse postcode is tenslotte ook een Nederlandse postcode. Middels de functie `super` roepen we dan ook allereerst de validatiefunctie aan van `DutchPostcodeField`. Van de opgeschoonde postcode controleren we of de eerste 4 cijfers van de postcodes vallen binnen de range van Amsterdamse postcodes.
+
+In `SubjectForm` wijzen we de twee aangepaste postcode velden toe aan `woonadres_postcode` en `correspondentie_postcode`. Het woonadres behoort altijd in Amsterdam te liggen en een correspondentieadres postcode mag in heel Nederland voorkomen. Het automatische gegenereerde formulier hebben we dus alleen voor twee specifieke velden aangepast.
+
+Tevens heb ik nog een beetje opmaak toegevoegd aan de formulieren. Zie tag v0.2 in de source code.
 
 ## Referenties
 

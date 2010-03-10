@@ -10,28 +10,30 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 	</head>
 	<body>
-		<div id="header">
-			<h1>Demo Zaakgericht Werken</h1>
-			<p>Alle gegevens die hier getoond worden zijn fictief en uit de duim gezogen. Elke overeenkomst met de werkelijkheid berust op toeval.</p>
+		<div class="container">
+			<div id="header">
+				<h1>Demo Zaakgericht Werken</h1>
+				<p>Alle gegevens die hier getoond worden zijn fictief en uit de duim gezogen. Elke overeenkomst met de werkelijkheid berust op toeval.</p>
+			</div>
+			<div id="menu">
+				<h2>Menu</h2>
+				<ul>
+					<li><a href="/subjecten">Cliënten</a></li>
+				</ul>
+			</div>
+			<div id="content">
+				{% block content %}
+					<p>-</p>
+				{% endblock %}
+			</div>
+			<div id="footer"> 
+				<ul> 
+					<li><a href="/">Home</a></li> 
+					<li><a href="#">About</a></li> 
+					<li><a href="#">Contact</a></li> 
+					<li>&copy; 2010 - My Business</li> 
+				</ul> 
+			</div> 
 		</div>
-		<div id="menu">
-			<h2>Menu</h2>
-			<ul>
-				<li><a href="/subjecten">Cliënten</a></li>
-			</ul>
-		</div>
-		<div id="content">
-			{% block content %}
-				<p>-</p>
-			{% endblock %}
-		</div>
-		<div id="footer"> 
-			<ul> 
-				<li><a href="/">Home</a></li> 
-				<li><a href="#">About</a></li> 
-				<li><a href="#">Contact</a></li> 
-				<li>&copy; 2010 - My Business</li> 
-			</ul> 
-		</div> 
 	</body>
 </html>

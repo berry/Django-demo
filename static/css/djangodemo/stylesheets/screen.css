@@ -87,24 +87,31 @@ caption { background: #eee; }
 
 .loud { color: #111111; }
 
-.showgrid { background: url('/images/grid.png?1267263512'); }
-
-body { width: 950px; margin: 0 auto; overflow: hidden; display: inline-block; }
-body { display: block; }
+body .container { width: 950px; margin: 0 auto; overflow: hidden; display: inline-block; }
+body .container { display: block; }
 body #menu { display: inline; float: left; margin-right: 10px; width: 230px; }
 * html body #menu { overflow-x: hidden; }
 body #menu li { list-style-type: none; margin-left: 0px; }
 body #content { display: inline; float: left; margin-right: 0; width: 710px; }
 * html body #content { overflow-x: hidden; }
-body #footer, body #header { display: inline; float: left; margin-right: 10px; width: 950px; }
+body #footer, body #header { display: inline; float: left; margin-right: 0; width: 950px; }
 * html body #footer, * html body #header { overflow-x: hidden; }
 body #footer { background-color: #eeeeee; margin-top: 1em; margin: 0; padding: 0; border: 0; outline: 0; overflow: hidden; display: inline-block; }
 body #footer { display: block; }
 body #footer li { list-style-type: none; margin-left: 0px; white-space: nowrap; display: inline; float: left; padding-left: 5px; padding-right: 5px; }
 body #footer li.first { padding-left: 0px; }
 body #footer li.last { padding-right: 0px; }
+body .commandmenu { margin: 0; padding: 0; border: 0; outline: 0; overflow: hidden; display: inline-block; margin-bottom: 1em; }
+body .commandmenu { display: block; }
+body .commandmenu li { list-style-type: none; margin-left: 0px; white-space: nowrap; display: inline; float: left; padding-left: 5px; padding-right: 5px; }
+body .commandmenu li.first { padding-left: 0px; }
+body .commandmenu li.last { padding-right: 0px; }
+
+form { line-height: 3; }
+form p { margin-bottom: 0; }
 
 table th { text-align: center; font-weight: bold; }
 table td, table th { padding: 2px; }
 table td.numeric, table th.numeric { text-align: right; }
 table th { background-color: #eeeeee; text-align: left; }
+table .label { float: left; width: 130px; }

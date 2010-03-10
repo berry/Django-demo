@@ -9,27 +9,38 @@
 
 // djangodemo layout
 +blueprint-typography("body")
-+blueprint-debug
 body
-  // Uncomment next line to make the debug grid visible
+  // Uncomment next two lines to make the debug grid visible
+  //+blueprint-debug
   //+showgrid
-  +container
+
   !sidebar_columns = floor(!blueprint_grid_columns / 4)
+  .container
+    +container
   #menu
     +column(!sidebar_columns)
     +no-bullets
   #content
     +column(!blueprint_grid_columns - !sidebar_columns, true)
   #footer, #header
-    +column(!blueprint_grid_columns)
+    +column(!blueprint_grid_columns, true)
   #footer
     background-color = #eee
     margin-top = 1em
     +horizontal-list(5px)
-
+  .commandmenu
+    +horizontal-list(5px)
+    margin-bottom = 1em
+   
+form
+  +blueprint-inline-form
+    
 table
   +table-scaffolding
   th
     background-color = #eee
     text-align = "left"
-    
+  .label
+    float = "left"
+    width = 130px
+

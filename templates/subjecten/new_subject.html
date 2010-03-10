@@ -1,0 +1,91 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+	<h2>Nieuwe cliënt opvoeren</h2>
+	{{ form.errors }}
+	<form action="/subjecten/new/" method="post">
+		<table>
+			<tr>
+				<th>Details</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Naam:</span> {{ form.voorletters}} {{ form.tussenvoegsels }} {{ form.achternaam }}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Burgerservicenummer: </span>{{ form.bsn }}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Geboortedatum:</span> {{ form.geboortedatum }}
+				</td>
+			</tr>
+		</table>	
+		<table>
+			<tr>
+				<th>Woonadres</th>
+				<th>Correspondentieadres</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Straat:</span>{{ form.woonadres_straatnaam }}
+				</td>
+				<td>
+					<span class="label">Straat:</span>{{ form.correspondentie_straatnaam }}
+				</td>				
+			<tr>
+				<td>	
+					<span class="label">Huisnummer:</span>{{ form.woonadres_huisnummer }}
+				</td>
+				<td>	
+					<span class="label">Huisnummer:</span>{{ form.correspondentie_huisnummer }}
+				</td>
+			</tr>
+			<tr>
+				<td>	
+					<span class="label">Huisnr. toevoeging:</span> {{ form.woonadres_huisnummer_toevoeging }}
+				</td>
+				<td>	
+					<span class="label">Huisnr. toevoeging:</span> {{ form.correspondentie_huisnummer_toevoeging }}
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Postcode:</span> {{ form.woonadres_postcode }}
+				</td>
+				<td>
+					<span class="label">Postcode:</span> {{ form.correspondentie_postcode }}
+				</td>
+			</tr>
+				<td>
+					<span class="label">Woonplaats:</span> {{ form.woonadres_woonplaats }}
+				</td>
+				<td>
+					<span class="label">Woonplaats:</span> {{ form.correspondentie_woonplaats }}
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<th>Contact</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">e-mail:</span> {{ form.email }}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">telefoon:</span> {{ form.telefoonnummer }}
+				</td>
+			</tr>
+
+		</table>
+		<a href="/subjecten/"><input type="button" value="Annuleer" /></a>
+		<input type="submit" value="Bewaar" />
+	</form>
+{% endblock content %}

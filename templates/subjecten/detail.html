@@ -4,6 +4,10 @@
 
 {% block content %}
 	<h2>Cliëntgegevens van {{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</h2>
+	<ul class="commandmenu">
+		<li>Acties:</li>
+		<li><a href="/subjecten/{{ subject.pk }}/edit/">Wijzig cliëntgegevens</a></li>
+	</ul>
 	<table>
 		<tr>
 			<th>Details</th>
@@ -12,7 +16,7 @@
 			<td>Burgerservicenummer: &nbsp;{{ subject.bsn }}</td>
 		</tr>
 		<tr>
-			<td>Geboortedatum: &nbsp;{{ subject.geboortedatum|date:"d M Y" }} ({{ subject.geboortedatum|leeftijd }} jaar)</td>
+			<td>Geboortedatum: &nbsp;{{ subject.geboortedatum|date:"j F Y" }} ({{ subject.geboortedatum|leeftijd }} jaar)</td>
 		</tr>
 	</table>	
 	<table>
@@ -23,11 +27,11 @@
 		<tr>
 			<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}<br/>
 			{{ subject.woonadres_straatnaam }} {{ subject.woonadres_huisnummer }} {{ subject.woonadres_huisnummer_toevoeging }}<br/>
-			{{ subject.woonadres_postcode|upper }}&nbsp;&nbsp;{{ subject.woonadres_woonplaats|upper }}
+			{{ subject.woonadres_postcode }}&nbsp;&nbsp;{{ subject.woonadres_woonplaats|upper }}
 			</td>
 			<td>{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}<br/>
 			{{ subject.correspondentie_straatnaam }} {{ subject.correspondentie_huisnummer }} {{ subject.correspondentie_huisnummer_toevoeging }}<br/>
-			{{ subject.correspondentie_postcode|upper }}&nbsp;&nbsp;{{ subject.correspondentie_woonplaats|upper }}
+			{{ subject.correspondentie_postcode }}&nbsp;&nbsp;{{ subject.correspondentie_woonplaats|upper }}
 			</td>
 		</tr>
 	</table>
