@@ -1,5 +1,7 @@
 ﻿{% extends "base.html" %}
 
+{% load subjecten_extras %}
+
 {% block content %}
 	<h2>Lijst van cliënten</h2>
 	<ul class="commandmenu">
@@ -9,11 +11,15 @@
 	<table>
 		<tr>
 			<th>Naam</th>
+			<th>Burgerservicenummer</th>
+			<th>Postcode</th>
 			<th>Woonplaats</th>
 		</tr>
 		{% for subject in subjecten %}
 		<tr>
-			<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a></td>
+			<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a> ({{ subject.geboortedatum|leeftijd }} jaar)</td>
+			<td>{{ subject.bsn}}</td>
+			<td>{{ subject.woonadres_postcode }}</td>
 			<td>{{ subject.woonadres_woonplaats|upper }}</td>
 		</tr>
 		{% endfor %}

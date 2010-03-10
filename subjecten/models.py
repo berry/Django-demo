@@ -3,6 +3,7 @@ import re
 from django.db import models
 from django import forms
 
+# Models
 class Subject(models.Model):
 	bsn = models.IntegerField('burger service nummer')
 	achternaam = models.CharField(max_length=200)

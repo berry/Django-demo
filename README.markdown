@@ -811,7 +811,19 @@ Het nieuwe veldtype `AmsterdamPostcodeField` erft over van `DutchPostcodeField`.
 
 In `SubjectForm` wijzen we de twee aangepaste postcode velden toe aan `woonadres_postcode` en `correspondentie_postcode`. Het woonadres behoort altijd in Amsterdam te liggen en een correspondentieadres postcode mag in heel Nederland voorkomen. Het automatische gegenereerde formulier hebben we dus alleen voor twee specifieke velden aangepast.
 
-Tevens heb ik nog een beetje opmaak toegevoegd aan de formulieren. Zie tag v0.2 in de source code.
+Tevens heb ik nog een beetje opmaak toegevoegd aan de formulieren. Zie tag v0.2 in de source code. Op Github kun je mooi de verschillen bekijken tussen v0.2 en v0.1 middels de url `http://github.com/berry/Django-demo/compare/v0.1...v0.2`.
+
+## Hoeveelheid source code
+
+Als we kijken naar de hoeveelheid code die ik zelf heb moeten intikken om de functionaliteit te realiseren dan ziet dat er als volgt uit:
+
+Voor versie v0.2 van deze demo:
+
+* 110 regels code (de subjecten/*.py bestanden)
+* 6 html-templates
+* 1 compass bestand van 45 regels
+
+Lege regels in de source code heb ik gewoon meegeteld. Ik heb m.a.w. gewoon naar het aantal regels in Textmate gekeken. Ik heb geen vergelijkingsmateriaal met andere webframeworks of platformen. Maar, de hoeveelheid source code komt op mij over als overzichtelijk en behapbaar.
 
 ## Referenties
 
