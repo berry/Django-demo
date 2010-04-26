@@ -23,6 +23,9 @@ urlpatterns = urlpatterns + patterns('',
     
     # Subjecten
     (r'^subjecten/', include("djangodemo.subjecten.urls")),
+
+    # Zaken
+    (r'^zaken/', include("djangodemo.zaken.urls")),
     
     # Static media
     # ONLY USE THIS FOR THE DEVELOPMENT SERVER. NEVER USE THIS IN PRODUCTION.

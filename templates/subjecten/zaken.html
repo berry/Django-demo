@@ -1,0 +1,33 @@
+﻿{% extends "base.html" %}
+
+{% load subjecten_extras %}
+
+{% block content %}
+	<h2>Zaken van <a href="/subjecten/{{ subject.pk }}/">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a></h2>
+	
+	<ul class="commandmenu">
+		<li>Acties:</li>
+		<li><a href="/subjecten/{{ subject.pk }}/zaken/new/">nieuwe zaak aanmaken voor {{ subject }}</a></li>
+	</ul>
+	
+	{% if zaken %}
+		<table>
+			<tr>
+				<th>Zaaktype</th>
+				<th>Startdatum</th>
+				<th>Wijzigingsdatum</th>
+				<th>Opmerkingen</th>
+			</tr>
+			{% for zaak in zaken %}
+			<tr>
+				<td><a href="/zaken/{{ zaak.id }}/">{{ zaak }}</a></td>
+				<td>{{ zaak.datum_start|date:"j F Y G:H" }}</td>
+				<td>{{ zaak.datum_wijziging|date:"j F Y G:H" }}</td>
+				<td>{{ zaak.opmerkingen }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>De cliënt heeft geen zaken.</p>
+	{% endif %}
+{% endblock content %}

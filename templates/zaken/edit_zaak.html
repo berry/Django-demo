@@ -1,0 +1,45 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+	<h2>Wijzig zaak voor cliënt</h2>
+	<table>
+		<tr>
+			<th>Details cliënt</th>
+		</tr>
+		<tr>
+			<td>
+				<span class="label">Naam:</span> {{ zaak.subject.voorletters}} {{ zaak.subject.tussenvoegsels }} {{ zaak.subject.achternaam }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="label">Burgerservicenummer: </span>{{ zaak.subject.bsn }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="label">Geboortedatum:</span> {{ zaak.subject.geboortedatum }}
+			</td>
+		</tr>
+	</table>
+	{{ form.errors }}
+	<form action="/zaken/{{ zaak.pk }}/edit/" method="post">
+		<table>
+			<tr>
+				<th>Nieuwe zaak</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Type zaak:</span> {{ form.type_zaak}}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="label">Opmerkingen: </span>{{ form.opmerkingen }}
+				</td>
+			</tr>
+		</table>	
+		<a href="/zaken/{{ zaak.pk }}/"><input type="button" value="Annuleer" /></a>
+		<input type="submit" value="Bewaar" />
+	</form>
+{% endblock content %}

@@ -1,0 +1,43 @@
+﻿{% extends "base.html" %}
+
+{% load subjecten_extras %}
+
+{% block content %}
+	<h2>Zaakdetails van {{ zaak }}</h2>
+	<ul class="commandmenu">
+		<li>Acties:</li>
+		<li><a href="/zaken/{{ zaak.pk }}/edit/">Wijzig zaakdetails</a></li>		
+		<li><a href="/subjecten/{{ zaak.subject.id }}/zaken/">Zaken van {{ zaak.subject }} ({{ zaak.subject.aantal_zaken }})</a></li>
+	</ul>
+	<table>
+		<tr>
+			<th>Gegevens cliënt</th>
+		</tr>
+		<tr>
+			<td>Naam: &nbsp;<a href="/subjecten/{{ zaak.subject.pk }}/">{{ zaak.subject }}</a></td>
+		</tr>
+		<tr>
+			<td>Burgerservicenummer: &nbsp;{{ zaak.subject.bsn }}</td>
+		</tr>
+		<tr>
+			<td>Geboortedatum: &nbsp;{{ zaak.subject.geboortedatum|date:"j F Y" }} ({{ zaak.subject.geboortedatum|leeftijd }} jaar)</td>
+		</tr>
+	</table>	
+	<table>
+		<tr>
+			<th>Details</th>
+		</tr>
+		<tr>
+			<td>Zaaktype: {{ zaak }}</td>
+		</tr>
+		<tr>
+			<td>Startdatum: {{ zaak.datum_start|date:"j F Y G:H" }}</td>
+		</tr>
+		<tr>
+			<td>Wijzigingsdatum: {{ zaak.datum_wijziging|date:"j F Y G:H" }}</td>
+		</tr>
+		<tr>
+			<td>Opmerkingen: {{ zaak.opmerkingen }}</td>
+		</tr>
+	</table>
+{% endblock content %}

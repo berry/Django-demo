@@ -1,28 +1,27 @@
 ﻿{% extends "base.html" %}
 
-{% load subjecten_extras %}
-
 {% block content %}
-	<h2>Lijst van cliënten</h2>
+	<h2>Lijst van zaken</h2>
 	<ul class="commandmenu">
 		<li>Acties:</li>
-		<li><a href="/subjecten/new/">Cliënt opvoeren</a></li>
+		<li>-</li>
 	</ul>
 	<table>
 		<tr>
-			<th>Naam</th>
-			<th>Burgerservicenummer</th>
-			<th>Postcode</th>
-			<th>Woonplaats</th>
-			<th>Aantal zaken</th>
+			<th>Type zaak</th>
+			<th>Startdatum</th>
+			<th>Wijzigingsdatum</th>
+			<th>Opmerking</th>
+			<th>Cliënt</th>
 		</tr>
-		{% for subject in subject_list %}
+		
+		{% for zaak in zaak_list %}
 		<tr>
-			<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a> ({{ subject.geboortedatum|leeftijd }} jaar)</td>
-			<td>{{ subject.bsn}}</td>
-			<td>{{ subject.woonadres_postcode }}</td>
-			<td>{{ subject.woonadres_woonplaats|upper }}</td>
-			<td><a href="/subjecten/{{ subject.id }}/zaken/">{{ subject.aantal_zaken }}</td>
+			<td><a href="/zaken/{{ zaak.id }}/">{{ zaak.type_zaak }}</a></td>
+			<td>{{ zaak.datum_start|date:"j F Y G:H" }}</td>
+			<td>{{ zaak.datum_wijziging|date:"j F Y G:H" }}</td>
+			<td>{{ zaak.opmerkingen }}</td>
+			<td><a href="/subjecten/{{ zaak.subject.id }}/">{{ zaak.subject }}</a></td>
 		</tr>
 		{% endfor %}
 	</table>

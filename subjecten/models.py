@@ -26,6 +26,14 @@ class Subject(models.Model):
 	class Meta:
 		verbose_name_plural = "subjecten"
 		
+	def aantal_zaken(self):
+		# Warning: this function could be the cause of 
+		# performance issues. If you show all subjecten and for 
+		# each subject you show its number of zaken then this could 
+		# cause a lot of queries to be executed. You can counter this
+		# by using select_related() strategically.
+		return self.zaak_set.filter(subject = self.id).count()
+		
 	def __unicode__(self):
 		return "%s %s %s" % (self.voorletters, self.tussenvoegsels, self.achternaam)
 

@@ -45,7 +45,7 @@ MEDIA_URL = ''
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/static/admin/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'u*onq-80ifbru9^h-y)n$l^rd_yr(#low#!lh+m%x)jsgzywzr'
@@ -79,4 +79,5 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'djangodemo.subjecten',
+    'djangodemo.zaken',
 )
