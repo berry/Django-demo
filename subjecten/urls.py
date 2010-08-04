@@ -10,7 +10,7 @@ urlpatterns = patterns('django.views.generic.list_detail',
 		'queryset': subjecten,
 		'template_name': 'subjecten/index.html',
 		'template_object_name': 'subject',
-		'paginate_by': 25}),
+		'paginate_by': 3}),
     (r'^(?P<object_id>\d+)/$', 'object_detail', {
 		'queryset': subjecten,
 		'template_name': 'subjecten/detail.html', 

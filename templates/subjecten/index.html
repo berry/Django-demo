@@ -18,7 +18,7 @@
 		</tr>
 		{% for subject in subject_list %}
 		<tr>
-			<td><a href="/subjecten/{{ subject.id }}">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a> ({{ subject.geboortedatum|leeftijd }} jaar)</td>
+			<td><a href="/subjecten/{{ subject.id }}/">{{ subject.voorletters }} {{ subject.tussenvoegsels }} {{ subject.achternaam }}</a> ({{ subject.geboortedatum|leeftijd }} jaar)</td>
 			<td>{{ subject.bsn}}</td>
 			<td>{{ subject.woonadres_postcode }}</td>
 			<td>{{ subject.woonadres_woonplaats|upper }}</td>
