@@ -19,6 +19,7 @@ urlpatterns = patterns('django.views.generic.list_detail',
 
 # CRUD pagina's subjecten en zaak functies bij subject
 urlpatterns += patterns('djangodemo.subjecten.views',
+    (r'^new/$', 'new'),
 	(r'^(?P<subject_id>\d+)/(edit|wijzig)/$', 'edit'),
 	(r'^(?P<subject_id>\d+)/zaken/$', 'zaken'),
 	(r'^(?P<subject_id>\d+)/zaken/(new|nieuw)/$', 'new_zaak_for_subject'),
